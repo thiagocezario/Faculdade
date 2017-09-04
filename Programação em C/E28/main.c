@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 	gets(stringA);
 	gets(stringB);
 	
-	while(stringA[i] != '\0' || stringB[i] != '\0'){
+	while(stringA[i] != '\0' && stringB[i] != '\0'){
 		if(stringA[i] == stringB[i]){
 			compare = 1;
 		}
