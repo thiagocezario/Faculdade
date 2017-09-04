@@ -17,8 +17,9 @@ int main(int argc, char *argv[]) {
 	
 	
 	while(text[i] != '\0'){
-		while(text[p] != ' ' || word[p] != '\0'){
-			compare = 0;
+		compare = 0;
+		while(text[p] != ' '){
+			
 			if(text[p] == word[p]){
 				compare = 1;
 			}
