@@ -15,11 +15,11 @@ int main(int argc, char *argv[]) {
 	while(text[i] != '\0'){
 		if(text[i] == letter){
 			if(i == '\0'){
-				position[p] = (char)48;
+				position[p] = i + 1;
 				p++;
 			}
 			else{
-				position[p] = i;
+				position[p] = i + 1;
 				p++;
 			}
 		}

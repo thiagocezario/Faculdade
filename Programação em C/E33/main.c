@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
 	int i = 0;
 	int n = 0;
 	int p = 0;
+	int w = 0;
 	int compare = 0;
 	
 	gets(text);
@@ -17,8 +18,8 @@ int main(int argc, char *argv[]) {
 	
 	
 	while(text[i] != '\0'){
-		compare = 0;
-		while(text[p] != ' '){
+		w = 0;
+		while((text[p] != ' ' && text[p] != '\0') || word[w] != '\0'){
 			
 			if(text[p] == word[p]){
 				compare = 1;
@@ -28,10 +29,14 @@ int main(int argc, char *argv[]) {
 				break;
 			}
 			p++;
+			w++;
+		}
+		if(text[p] != '\0'){
+			p+=1;
 		}
 		if(compare){
 			if(i == '\0'){
-				occurrence[n] = 48;
+				occurrence[n] = i + 1;
 				n++;
 			}
 			else{
