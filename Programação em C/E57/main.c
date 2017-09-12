@@ -4,13 +4,11 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int Compare(char string[]){
-	int i = 0;
 	int j = 0;
 	int k = 0;
 	int compare = 0;
 	
-	while(string[i] != '\0'){
-		for(j = 0, k = StringLength(string); j != '\0', k >= 0; j++, k--){
+		for(j = 0, k = StringLength(string) - 1; j != '\0', k >= 0; j++, k--){
 			if(string[j] != string[k]){
 				compare = 0;
 				break;
@@ -19,11 +17,6 @@ int Compare(char string[]){
 				compare = 1;
 			}
 		}
-		if(!compare){
-			break;
-		}
-		i++;
-	}
 	return compare;
 }
 
@@ -38,7 +31,7 @@ int StringLength(char string[]){
 	return size;
 }
 
-char Format(char string[]){
+char* Format(char string[]){
 	int i = 0;
 	int k = 0;
 	
@@ -68,6 +61,9 @@ int main(int argc, char *argv[]) {
 	
 	if(Compare(Format(string))){
 		printf("O texto '%s' eh palindromo\n", string);
+	}
+	else{
+		printf("O texto '%s' nao eh palindromo\n", string);
 	}
 	
 	return 0;
