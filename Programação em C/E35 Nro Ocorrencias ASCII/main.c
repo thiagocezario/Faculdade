@@ -13,7 +13,7 @@ int StrSize(char str[]){
 }
 
 int Counter(char chr, char str[]){
-	int i = 0, size counter = 0;
+	int i = 0, size, counter = 0;
 	
 	size = StrSize(str);
 	
@@ -33,14 +33,16 @@ int main(int argc, char *argv[]) {
 	printf("Entre com uma string: ");
 	gets(str);
 	
-	for(i = 0, i < 94; i++){
-		ascii[i] = i;
+	for(i = 0; i < 94; i++){
+		ascii[i] = i + 32;
 	}
 	
 	for(i = 0; i < 94; i++){
 		counter[i] = Counter(ascii[i], str);
 	}
 	
+	ascii;
+	counter;
 	printf("Caracter\tNro Ocorrencias\n");
 	for(i = 0; i < 94; i++){
 		if(counter[i] != 0){

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 
 
-int setBit(int nro, int nbit)
+int resetBit(int nro, int nbit)
 {
-	return nro | (0x01 << nbit);
+	return nro & ~(0x01 << nbit);
 	/*essa parte vai deslocar o bit 1 (0001) para a esquerda o nbit vezes, se nbit for 1, ele vai deslocar 1 vez
 	transformando 1 em 2 (0010), com isso é feita a operação de OR com o valor do nro, por exemplo, se nro for 5
 	(0101), e nbit for 3, teremos 0101 | 1000, oq resultaria em 1101	0101
@@ -20,6 +20,6 @@ int main(int argc, char** argv)
 	
 	scanf("%d", &nro);
 	scanf("%d", &nbit);
-	printf("setBit(%d,%d) = %d\n", nro, nbit, setBit(nro, nbit));
+	printf("resetBit(%d,%d) = %d\n", nro, nbit, resetBit(nro, nbit));
 	return 0;
 }
