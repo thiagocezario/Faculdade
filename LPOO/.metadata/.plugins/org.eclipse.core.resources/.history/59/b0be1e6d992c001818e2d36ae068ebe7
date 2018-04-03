@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class Media {
+	private static Scanner read;
+
+	public static void main (String[] args) {
+		read = new Scanner(System.in);
+		
+		double vetorMedia[] = new double[15];
+		String input = "";
+		String regex = "^[+-]?\\d+[.]?\\d*";
+		int posicao = 0;
+		double total = 0;
+		
+		
+		do {
+			System.out.println("\nEnter with a value:\n");
+			input = read.next();
+			
+			if (input.matches(regex)) {
+				vetorMedia[posicao] = Double.parseDouble(input);
+				posicao++;
+				
+			} else if(!input.equals("s")){
+				System.out.printf("\n%s is an invalid value\n", input);
+				
+			}
+		} while (posicao < vetorMedia.length || !(input.equals("s"))); 
+		
+		for(int i = 0; i <= posicao; i++) {
+			System.out.println("\nArray:\n");
+			System.out.printf("%d\t", vetorMedia[posicao]);
+			total += vetorMedia[posicao];
+		}
+		
+		System.out.printf("\nMedia:  %d\n", total/posicao);
+	}
+}

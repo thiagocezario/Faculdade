@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+public class Matriz {
+	private static Scanner read;
+	
+	public static void main (String[] args) {
+		int linhas = 0;
+		int colunas = 0;
+		
+		read = new Scanner(System.in);
+		
+		System.out.printf("Entre com o numero de linhas da matriz:\n");
+		linhas = read.nextInt();
+		
+		System.out.printf("Entre com o numero de colunas da matriz:\n");
+		colunas = read.nextInt();		
+		
+		double matriz[][] = new double[linhas][colunas];
+		
+		matriz = PreencheMatriz(matriz);
+		
+		System.out.printf("A soma da diagonal principal (%f) "
+				+ "com a diagonal secundaria (%f) é: %f",
+				SomaPrimaria(matriz), 
+				SomaSecundaria(matriz), 
+				SomaPrimaria(matriz)+SomaSecundaria(matriz));
+	}
+
+	public static double[][] PreencheMatriz (double matriz[][]) {
+		read = new Scanner(System.in);
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[0].length; j++) {
+				System.out.printf ("Insira um valor para a posicao %dx%d\n", i, j);
+				matriz[i][j] = read.nextDouble();
+			}
+		}
+		
+		
+		return matriz;
+	}
+	
+	public static double SomaPrimaria (double matriz[][]) {
+		double soma = 0;
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[0].length; j++) {
+				if (i == j) {
+					soma += matriz[i][j];
+				}
+			}
+		}
+		
+		return soma;
+	}
+	
+	public static double SomaSecundaria (double matriz[][]) {
+		double soma = 0;
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[0].length; j++) {
+				if (j == (matriz.length - 1 - i)) {
+					soma += matriz[i][j];
+				}
+			}
+		}
+		
+		return soma;
+	}
+}
