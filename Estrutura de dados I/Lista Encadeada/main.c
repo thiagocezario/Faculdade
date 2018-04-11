@@ -18,7 +18,7 @@ int remove_fim_lista(Nodo **N);
 void remove_elemento_lista(Nodo **N, int dado);//
 int quantidade_lista(Nodo *N);
 void exibe_lista(Nodo *N);//
-int pesquisa_lista(Nodo *N, int dado);//
+int pesquisa_lista(Nodo **N, int dado);//
 void apaga_lista(Nodo**N);//
 Nodo* Cria_Nodo();
 
@@ -37,7 +37,8 @@ int main(int argc, char *argv[]) {
 		printf("\n7. Apaga Lista");
 		printf("\n8. Imprime lista");
 		printf("\n9. Pesquisa lista");
-		printf("\nS. Sair\n");
+		printf("\n10. Sair\n");
+
 		scanf("%d", &menu);
 		switch (menu) {
 			case 1:
@@ -84,8 +85,11 @@ int main(int argc, char *argv[]) {
                 exibe_lista(lista);
 				break;
             case 9:
+                printf("Entre com um valor: ");
+                scanf("%d", &valor);
+                printf("\nValor %d na posicao %d", valor, pesquisa_lista(&lista, valor));
                 break;
-            case 's':
+            case 10:
 				printf("\nFim");
 				break;
 			default:
@@ -93,7 +97,7 @@ int main(int argc, char *argv[]) {
 				break;
 		}
 		printf("\n\n");
-	} while (menu != 's');
+	} while (menu != 10);
 
 	return 0;
 }
@@ -128,8 +132,15 @@ int remove_inicio_lista(Nodo **N) {
 
 	if (*N != NULL) {
 		remove = *N;
+
 		*N = remove->prox;
+
+		if (remove->prox == NULL){
+            free(remove);
+            return 0;
+        }
 		free(remove);
+
 
 		return 1;
 	}
@@ -139,26 +150,39 @@ int remove_inicio_lista(Nodo **N) {
 
 int remove_fim_lista(Nodo **N) {
     Nodo *remove = *N;
+    Nodo *aux;
 
     while (remove->prox != NULL) {
-        remove = remove->prox;
+        aux = remove;
+        remove = remove-> prox;
     }
 
-    if (*N != NULL) {
-        *N = remove->prox;
+    if (*N) {
+        aux->prox = NULL;
         free(remove);
-
         return 1;
     }
+
     return 0;
 }
 
 void apaga_lista(Nodo **N) {
-	int i = 0;
+	int i = 1;
+    Nodo *remove;
 
 	while (i == 1) {
-		i = remove_inicio_lista(*N);
-	}
+		/*if (*N != NULL) {
+            remove = *N;
+            *N = remove->prox;
+            free(remove);
+
+            i = 1;
+            continue;
+        }
+
+        i = 0;*/
+        i = remove_inicio_lista(*N);
+    }
 }
 
 void remove_elemento_lista(Nodo **N, int dado) {
@@ -181,13 +205,11 @@ void remove_elemento_lista(Nodo **N, int dado) {
 					free(remove);
 
 					return;
-
 				}
 
 			} else {
 				anterior = remove;
 				remove = remove->prox;
-
 			}
 		}
 	}
@@ -195,24 +217,22 @@ void remove_elemento_lista(Nodo **N, int dado) {
 	return;
 }
 
-int pesquisa_lista(Nodo *N, int dado) {
+int pesquisa_lista(Nodo **N, int dado) {
 	Nodo *busca;
+	int iteracao = 0;
 
-	Nodo *remove = N;
+    if (N != NULL){
+        busca = *N;
+        while (busca != NULL) {
+            iteracao++;
+            if (busca->dado == dado) {
+                return iteracao;
 
-	if (remove) {
-		busca = N;
-
-		while (busca != NULL) {
-			if (busca->dado == dado) {
-				return busca->dado;
-
-			} else {
-				busca = busca->prox;
-
-			}
-		}
-	}
+            } else {
+                busca = busca->prox;
+            }
+        }
+    }
 
 	return 0;
 }
@@ -238,7 +258,10 @@ void insere_fim_lista(Nodo **N, int dado) {
     Nodo *proximo = *N;
 
     if(proximo == NULL) {
-        insere_inicio_lista(*N, dado);
+        novo = Cria_Nodo();
+        novo -> dado = dado;
+        novo -> prox = *N;
+        *N = novo;
         return;
     }
 

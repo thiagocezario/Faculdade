@@ -440,3 +440,151 @@ Nodo alguma_coisa (Nodo *l1, nodo l2) {
 	
 	return l3;
 }
+
+
+
+10/04
+
+- Lista linear duplamente encadeada
+	
+	- Definição: uma lista que possui duas referencias em cada nodo
+	Pode ser do tipo:
+	
+		-Sem cabeçalho
+		-Com cabeçalho
+		
+	Ex1.:
+	
+	|500|
+	  |
+	  v
+	| 5 |700| <-> | 3 |200| <-> | 8 |120| <-> |10 |NULL|
+		500			 700			200			 120
+		
+		
+		
+	Ex2.: 
+	
+		|------|Quantidade de elementos| ---------|
+		v									      v
+	| 5 |700| <-> | 3 |200| <-> | 8 |120| <-> |10 |NULL|
+	   500			 700		   200			 120
+	   
+
+Estrutura de dados
+
+typedef struct Bloco {
+	int dado;
+	struct Bloco *anterior, *prox;
+} Nodo;
+
+Operações
+
+- void inicializa_lista();
+- void insere_inicio(int dado);
+- void insere_fim(int dado);
+- void insere_ordenado(int dado);
+- void remove_inicio(int *dado);
+- void remove_fim(int *dado);
+- int remove_elemento(int dado);
+- int busca_lista(int dado);
+- void apaga_lista();
+
++ Declaração da lista:
+	-Sem cabeçalho:
+	
+		Nodo *inicio, *fim;
+		typedef struct Cabeca;
+		int total_elem;
+		
+	-Com cabeçalho:
+		
+		Nodo *inicio, *fim;
+		typedef struct Cabeca;
+		int total_elem;
+		Nodo *inicio, *fim; 	<--- Cabeçalho
+		
+		
+		
+void inicializa_lista_dupla(Nodo **prim, Nodo **ult) {
+	*prim = NULL;
+	*ult = NULL;
+}
+
+Nodo *Cria_Nodo() {
+	Nodo *p;
+	p = (Nodo *)malloc*(sizeof(Nodo));
+	
+	if (!p) {
+		printf("Problema na alocação");
+		exit(0);
+	}
+	
+	return p;
+}
+
+void insere_inicio_dupla(int dado, Nodo **prim, Nodo **ult) {
+	Nodo *p;
+	p = Cria_Nodo();
+	p -> dado = dado;
+	p -> inicio = NULL;
+	p -> fim = *prim;
+	
+	if (*prim != NULL) {
+		(*prim) -> inicio = p;
+	}
+	
+	*prim = p;
+	
+	if (*ult == NULL) {
+		*ult = p;
+	}
+}
+
+void main() {
+	Nodo *inicioL, *fimL;
+	inicializa_lista_dupla(&inicioL, &fimL);
+	insere_inicio_dupla_cabecalho(total_elem, &listaDupla);
+}
+
+void insere_inicio_dupla_cabecalho (int dado, cabecalho *listaDupla) {
+	Nodo *p;
+	p = Cria_Nodo();
+	p -> dado = dado;
+	p -> inicio = NULL;
+	p -> fim = listaDupla -> inicio;
+	
+	if (listaDupla -> inicio != NULL) {
+		listaDupla -> inicio -> inicio = p;
+	}
+	
+	listaDupla -> inicio = p;
+	listaDupla -> total_elem += 1;
+	
+	if (listaDupla -> fim == NULL) {
+		listaDupla -> fim = p;
+	}
+}
+
+void inicializa_lista_dupla(cabecalho *listaDupla) {
+	listaDupla -> total_elem = 0;
+	listaDupla -> inicio = NULL;
+	listaDupla -> fim = NULL;
+}
+
+void insere_fim_dupla(int dado, Nodo **prim, Nodo **ult) {
+	Nodo *p;
+	p = Cria_Nodo();
+	p -> dado = dado;
+	p -> fim = NULL;
+	
+	if (*prim == NULL) {
+		p ->inicio = NULL;
+		*prim = p;
+		*ult = p;
+	} else {
+		p -> ult = *ult;
+		*ult -> fim = p;
+		*ult = p;
+	}
+}
