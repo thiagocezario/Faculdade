@@ -108,7 +108,7 @@ public class SistemaPedidos {
 		pedidos.add(pedido);	
 	}
 	
-	public static void excluirPedido(String cliente) throws RuntimeException{
+	public static void excluirPedido(String cliente) {
 		try {
 			for(Pedido pedido : pedidos) {
 				if(pedido.getCliente().equals(cliente)) {
