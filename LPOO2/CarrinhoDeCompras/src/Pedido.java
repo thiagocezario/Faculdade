@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 public class Pedido {
 	// Properties
 	String nomeCliente;
@@ -56,7 +54,7 @@ public class Pedido {
 		boolean removeuItem = false;
 		if (item != null) {
 			for(ItemDePedido i : this.itens) {
-				if (i.getNome() == item) {
+				if (i.getNome().equals(item)) {
 					this.itens.remove(i);
 					removeuItem = true;
 					break;

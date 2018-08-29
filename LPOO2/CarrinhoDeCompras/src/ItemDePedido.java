@@ -19,9 +19,13 @@ public class ItemDePedido {
 			throw new RuntimeException("Quantidade inválida");
 		}
 		
-		this.setNome(nome);
-		this.setPreco(preco);
-		this.setQuantidade(quantidade);
+		try {
+			this.setNome(nome);
+			this.setPreco(preco);
+			this.setQuantidade(quantidade);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	// Gets and Sets
@@ -29,7 +33,11 @@ public class ItemDePedido {
 		return this.nome;
 	}
 	
-	public void setNome(String nome) {
+	public void setNome(String nome) throws RuntimeException {
+		if (nome.isEmpty() || nome == null) {
+			throw new RuntimeException("Nome do produto invalido");
+		}
+		
 		this.nome = nome;
 	}
 	
@@ -37,7 +45,11 @@ public class ItemDePedido {
 		return this.preco;
 	}
 	
-	public void setPreco(double preco) {
+	public void setPreco(double preco) throws RuntimeException {
+		if (preco < 0) {
+			throw new RuntimeException("Preço invalido");
+		}
+		
 		this.preco = preco;
 	}
 	
@@ -45,14 +57,11 @@ public class ItemDePedido {
 		return this.quantidade;
 	}
 	
-	public void setQuantidade(int quantidade) {
+	public void setQuantidade(int quantidade) throws RuntimeException {
+		if (quantidade < 1) {
+			throw new RuntimeException("Quantidade inválida");
+		}
+		
 		this.quantidade = quantidade;
 	}
 }
-
-/*Escreva a estrutura de uma classe (atributos e métodos) para
-representar um ItemDePedido (nome(String), preço(double),
-quantidade(int)). Crie o construtor com validação para preço
-negativo, descrição nula ou vazia e quantidade 0 ou negativa.
-Crie os gets e sets (com as devidas validações).
-b. Crie uma classe Pedido com o nome do cliente(Stri*/

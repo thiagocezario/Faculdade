@@ -1,14 +1,9 @@
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
-import junit.framework.Assert;
 
 class PedidoTests {
 	@Test
@@ -233,8 +228,3 @@ class PedidoTests {
 		assertEquals(valorEsperado, valorAtual);
 	}
 }
-/*
-
-vi. String toString(): método que retorna uma String de forma
-legível para o pedido:
-*/
