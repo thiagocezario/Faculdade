@@ -53,43 +53,56 @@ void free_stack (Pilha *p) {
 
 int notacao_polonesa(Pilha* p, char vetor[]) {
     int i = 0;
-    for (i; i<sizeof(vetor);i+=2) {
+
+    while (vetor[i] > 31) {
         int num1;
         int num2;
+        int resultado;
         char op;
-
-        if (vetor[i] == '+' || vetor[i] == '-' || vetor[i] == '*' || vetor[i] == '/') {
-            op = vetor[i];
-            num1 = (int)pop(p);
+        char teste = vetor[i];
+        if (teste == 42 || teste == 43 || teste == 45 || teste == 47) {
+            op = teste;
             num2 = (int)pop(p);
+            num1 = (int)pop(p);
 
             switch(op) {
-            case '+':
-                push(p, num1 + num2);
+            case 43:
+                resultado = num1 + num2;
+                push(p, resultado);
                 break;
-            case '-':
-                push(p, num1 - num2);
+            case 45:
+                resultado = num1 - num2;
+                push(p, resultado);
                 break;
-            case '*':
-                push(p, num1 * num2);
+            case 42:
+                resultado = num1 * num2;
+                push(p, resultado);
                 break;
-            case '/':
-                push(p, num1 / num2);
+            case 47:
+                resultado = num1 / num2;
+                push(p, resultado);
                 break;
             }
         } else {
             push(p, (int)(vetor[i] - '0'));
         }
+        i+=2;
     }
 }
 
 int main () {
-	int tam = 7;
-
+	int tam = 20;
+    char vetor[13] = "1 2 - 4 5 + *";
 	Pilha *p = create_stack (tam+1);
 
-    notacao_polonesa(p, "1 2 – 4 5 + *");
+    notacao_polonesa(p, vetor);
 	printf("%d\n", (int)pop(p));
+
+    //empty(p);
+	char vetor2[20] = "9 0 1 + 2 3 * * +";
+	notacao_polonesa(p, vetor2);
+    printf("%d\n", (int)pop(p));
+
 	free_stack (p);
 	return 0;
 }
