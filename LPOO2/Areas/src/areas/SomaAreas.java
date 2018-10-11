@@ -5,6 +5,7 @@
  */
 package areas;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Thiago
  */
 public class SomaAreas {
-    public double calculaArea(List<? extends Superficie> formas) {
+    public <T extends Superficie> double calculaArea(T formas[]) {
         double soma = 0;
         
         for(Superficie s : formas) {

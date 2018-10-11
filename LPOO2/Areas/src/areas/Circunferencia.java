@@ -18,6 +18,6 @@ public class Circunferencia implements Superficie {
     
     @Override
     public double area() {
-        return Math.pow(this.raio, 2)*2*Math.PI;
+        return Math.pow(this.raio, 2)*Math.PI;
     }
 }
