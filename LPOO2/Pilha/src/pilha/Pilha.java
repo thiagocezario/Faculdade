@@ -10,55 +10,55 @@ para que imprima a lista no seguinte formato:
  */
 package pilha;
 
-import java.lang.reflect.Array;
-
 /**
  *
  * @author Thiago
  * @param <T>
  */
 public class Pilha<T> {
-    private int tamanho = 10;
-    private Object[] item;
-    private int top;
+    private No pilha;
+    private int topo;
+    
+    class No{
+        T elemento;
+        No proximo;
+    }
     
     Pilha() {
-        this.top = -1;
-        this.item = new Object[this.tamanho];
+        this.topo = -1;
+        this.pilha = new No();
     }
     
     public void empilha(T item) {
-        if(this.top == this.tamanho) {
-            return;
-        }
-        
-        this.item[this.top+1] = item;
-        this.top++;
+        No anterior = this.pilha;
+        this.pilha = new No();
+        this.pilha.elemento = item;
+        this.topo++;
+        this.pilha.proximo = anterior;
     }
     
     public T desempilha(){
-        return item();
+        if (this.topo < 0) {
+            return null;
+	}
+	this.topo--;
+	T valor = this.pilha.elemento;
+        this.pilha = this.pilha.proximo;
+        
+        return valor;
     }
     
     @Override
     public String toString() {
-        String result = "[ ";
-        int range = this.top;
-        while(range > -1) {
-            result += this.item[range].toString();
+        String result = "";
+        for (No p = this.pilha; p.proximo != null; p = p.proximo) {
+            result += p.elemento.toString();
             
-            if (range > 0) {
-                result +=  ", ";
+            if (p.proximo.elemento != null) {
+                result += ", ";
             }
-            
-            range--;
         }
         
-        result += " ]";
-        return result;
-    }
-    
-    private T item() {
-        return (T)item[this.top--];
+        return "[ " + result + " ]";
     }
 }
