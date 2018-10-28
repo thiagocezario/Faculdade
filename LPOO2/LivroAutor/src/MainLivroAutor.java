@@ -1,9 +1,15 @@
 
+import Model.Livro;
+import Model.AutorDAO;
+import Model.LivroDAO;
+import Model.Autor;
+import Views.MainView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class MainLivroAutor {
 
@@ -18,6 +24,13 @@ public class MainLivroAutor {
     public static void main(String args[]) throws Exception {
         MainLivroAutor main = new MainLivroAutor();
         String opcao;
+//
+//        try {
+//            MainView mainView = new MainView();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         while (true) {
             try {
                 System.out.println("Escolha uma das opções e tecle <ENTER>: ");
@@ -32,45 +45,7 @@ public class MainLivroAutor {
                 opcao = sc.nextLine();
                 switch (opcao) {
                     case "1":
-                        List<Livro> livrosDoAutor = main.incluirAutor();
-
-                        System.out.println("Deseja listar todos os livros do autor? (Sim/Nao)");
-                        String mostrar = sc.nextLine();
-
-                        if (mostrar.equals("n") || mostrar.equals("N")) {
-                            System.out.println("Deseja informar um livro especifico?");
-
-                            do {
-                                System.out.println("Qual o ID do livro? (-1 para nao informar)");
-                                int idLivro = sc.nextInt();
-                                if (idLivro < 0) {
-                                    break;
-                                }
-
-                                Livro livro = main.livroDAO.consultarLivro(idLivro);
-
-                                if (livro != null) {
-                                    System.out.println(livro.getId() + " \t" + livro.getTitulo());
-                                } else {
-                                    System.out.println("Nenhum livro encontrado");
-                                }
-                            } while (true);
-                        } else if (mostrar.equals("s") || mostrar.equals("S")) {
-                            if (livrosDoAutor != null) {
-                                Collections.sort(livrosDoAutor, new Comparator<Livro>() {
-                                    public int compare(Livro arg0, Livro arg1) {
-                                        return arg0.getTitulo().compareToIgnoreCase(arg1.getTitulo());
-                                    }
-                                });
-                                System.out.println("ID\tTITULO");
-                                for (Livro livro : livrosDoAutor) {
-                                    System.out.println(livro.getId() + " \t" + livro.getTitulo());
-                                }
-                            } else {
-                                System.out.println("Nenhum livro encontrado");
-                            }
-                        }
-
+                        main.incluirAutor();
                         break;
                     case "2":
                         main.incluirLivro();
@@ -118,12 +93,40 @@ public class MainLivroAutor {
         }
     }
 
-    public List<Livro> incluirAutor() throws Exception {
+    public void incluirAutor() throws Exception {
         System.out.print("Digite o nome do autor:");
         Scanner sc = new Scanner(System.in, "ISO-8859-1");
         String nome = sc.nextLine();
         Autor autor = new Autor(nome);
-        return autorDAO.inserirAutor(autor);
+        
+        
+        
+        int numLivros = 1;
+        int idLivro = 0;
+        List<Livro> listaLivros = new ArrayList<Livro>();
+        
+        do {
+            try {
+                Scanner sc2 = new Scanner(System.in, "ISO-8859-1");
+                System.out.print("ID Livro " + numLivros + ":");
+                idLivro = sc2.nextInt();
+                if (idLivro == -1) {
+                    break;
+                }
+                
+                Livro livro = livroDAO.consultarLivro(idLivro);
+                if (livro != null) {
+                    listaLivros.add(livro);
+                    numLivros++;
+                } else {
+                    System.out.println("Livro não existe!");
+                }
+            } catch (Exception ex) {
+                System.out.println("ID do livro não é inteiro ou inválido!");
+            }
+        } while (true);
+        autor.setLivros(listaLivros);
+        autor = autorDAO.inserirAutor(autor);
     }
 
     public void incluirLivro() {

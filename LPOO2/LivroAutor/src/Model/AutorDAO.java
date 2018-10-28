@@ -1,3 +1,5 @@
+package Model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +16,7 @@ public class AutorDAO {
     private final String stmtListar = "SELECT * FROM autor";
     private final String stListaLivros = "SELECT * FROM Livro_Autor where idAutor = ?";
 
-    public List<Livro> inserirAutor(Autor autor) {
+    public Autor inserirAutor(Autor autor) {
         Connection con = null;
         PreparedStatement stmt = null;
         try{
@@ -24,7 +26,9 @@ public class AutorDAO {
             stmt.executeUpdate();
             autor.setId(lerIdAutor(stmt));
             
-            return listarLivros(autor);
+            this.gravarLivros(autor, con);
+            
+            return autor;
         } catch (SQLException ex) {
             throw new RuntimeException("Erro ao inserir um autor no banco de dados. Origem="+ex.getMessage());
         } finally{
@@ -32,7 +36,18 @@ public class AutorDAO {
             try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());};
         }
      }
-    
+
+    private void gravarLivros(Autor autor, Connection con) throws SQLException {
+        String sql = "INSERT INTO livro_autor (idLivro, idAutor) VALUES (?, ?)";
+        PreparedStatement stmt;
+        stmt = con.prepareStatement(sql);
+        stmt.setInt(2, autor.getId());
+        List<Livro> livros = autor.getLivros();
+        for (Livro livro : livros) {
+            stmt.setLong(1, livro.getId());
+            stmt.executeUpdate();
+        }
+    }
     private int lerIdAutor(PreparedStatement stmt) throws SQLException {
         ResultSet rs = stmt.getGeneratedKeys();
         rs.next();

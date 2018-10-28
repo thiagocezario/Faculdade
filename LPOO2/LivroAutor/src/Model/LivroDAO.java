@@ -1,3 +1,5 @@
+package Model;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,6 +28,36 @@ public class LivroDAO {
             this.gravarAutores(livro, con);
 
             con.commit();
+        } catch (SQLException ex) {
+            try {
+                con.rollback();
+            } catch (SQLException ex1) {
+                System.out.println("Erro ao tentar rollback. Ex=" + ex1.getMessage());
+            };
+            throw new RuntimeException("Erro ao inserir um livro no banco de dados. Origem=" + ex.getMessage());
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar stmt. Ex=" + ex.getMessage());
+            };
+            try {
+                con.close();;
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar conexão. Ex=" + ex.getMessage());
+            };
+        }
+    }
+
+    public void deletarLivro(Livro livro) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            con.setAutoCommit(false);
+            stmt = con.prepareStatement("DELETE FROM livro WHERE titulo = ?", PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, livro.getTitulo());
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             try {
                 con.rollback();
@@ -162,7 +194,7 @@ public class LivroDAO {
         }
     }
 
-    public List<Autor> listarAutores(int idLivro) throws Exception{
+    public List<Autor> listarAutores(int idLivro) throws Exception {
         Connection con = null;
         PreparedStatement st = null;
         ResultSet rs = null;
