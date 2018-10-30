@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
-
-import Views.AutorView;
+package Views;
 
 /**
  *
  * @author Thiago
  */
-public class AutorController {
-    private AutorView autorView;
+public class AutorTable {
     
-    public AutorController() {
-        autorView = new AutorView();
-    }
 }

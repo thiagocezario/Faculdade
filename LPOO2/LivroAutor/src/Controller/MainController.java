@@ -20,6 +20,10 @@ public class MainController {
     
     
     public MainController() {
+        initialize();
+    }
+    
+    private void initialize() {
         mainView = new MainView();
     }
 }

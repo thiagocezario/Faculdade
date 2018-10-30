@@ -1,15 +1,14 @@
 
+import Controller.MainController;
 import Model.Livro;
 import Model.AutorDAO;
 import Model.LivroDAO;
 import Model.Autor;
-import Views.MainView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
 
 public class MainLivroAutor {
 
@@ -24,12 +23,8 @@ public class MainLivroAutor {
     public static void main(String args[]) throws Exception {
         MainLivroAutor main = new MainLivroAutor();
         String opcao;
-//
-//        try {
-//            MainView mainView = new MainView();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        
+        MainController mainController = new MainController();
 
         while (true) {
             try {
@@ -98,13 +93,11 @@ public class MainLivroAutor {
         Scanner sc = new Scanner(System.in, "ISO-8859-1");
         String nome = sc.nextLine();
         Autor autor = new Autor(nome);
-        
-        
-        
+
         int numLivros = 1;
         int idLivro = 0;
         List<Livro> listaLivros = new ArrayList<Livro>();
-        
+
         do {
             try {
                 Scanner sc2 = new Scanner(System.in, "ISO-8859-1");
@@ -113,7 +106,7 @@ public class MainLivroAutor {
                 if (idLivro == -1) {
                     break;
                 }
-                
+
                 Livro livro = livroDAO.consultarLivro(idLivro);
                 if (livro != null) {
                     listaLivros.add(livro);

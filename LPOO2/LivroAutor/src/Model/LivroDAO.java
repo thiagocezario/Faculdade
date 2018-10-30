@@ -13,7 +13,7 @@ public class LivroDAO {
     private final String stmtInserir = "INSERT INTO livro(titulo) VALUES(?)";
     private final String stmtConsultar = "SELECT * FROM livro WHERE id = ?";
     private final String stmtListaLivroAutor = "SELECT * FROM livro";
-
+    
     public void inserirLivro(Livro livro) {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -219,6 +219,60 @@ public class LivroDAO {
             return autores;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao listar um livro com autores no banco de dados. Origem=" + e.getMessage());
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar rs. Ex=" + ex.getMessage());
+            };
+            try {
+                st.close();
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar st. Ex=" + ex.getMessage());
+            };
+            try {
+                con.close();;
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar conexão. Ex=" + ex.getMessage());
+            };
+        }
+    }
+    
+    public List<Livro> listarLivros() {
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            st = con.prepareStatement("SELECT * FROM livro");
+            rs = st.executeQuery();
+            
+            List<Livro> livros = new ArrayList<Livro>();
+            
+            while(rs.next()) {
+                String titulo = rs.getString("titulo");
+                int idLivro = rs.getInt("id");
+                List<Autor> autores = this.lerAutores(idLivro, con);
+                Livro livro = new Livro(titulo, autores);
+                
+                /*
+                String assunto = rs.getString("assunto");
+                String isbn = rs.getString("isbn");
+                Date dataPublicacao = rs.getDate("publicacao");
+                
+                livro.setAssunto(assunto);
+                livro.setISBN(isbn);
+                livro.setPublicacao(dataPublicacao);
+                */
+                
+                livros.add(livro);
+            }
+            
+            return livros;
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao listar um livro com autores no banco de dados. Origem=" + ex.getMessage());
         } finally {
             try {
                 rs.close();

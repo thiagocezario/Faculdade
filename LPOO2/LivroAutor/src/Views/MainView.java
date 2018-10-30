@@ -5,15 +5,12 @@
  */
 package Views;
 
-import java.awt.Color;
-import java.awt.Toolkit;
+import Controller.AutorController;
+import Controller.LivroController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
@@ -22,6 +19,8 @@ import javax.swing.JPanel;
 public class MainView {
 
     protected JFrame frame;
+    AutorController autorController;
+    LivroController livroController;
 //	
 //	public static void main(String[] args) {
 //		Main.main(args);
@@ -41,22 +40,86 @@ public class MainView {
 
     public MainView() {
         initialize();
-//        frame.setVisible(true);
+        frame.setVisible(true);
     }
 
     private void initialize() {
-        frame = new JFrame();
+        int leftMargin = 32;
+        int topMargin = 50;
+        int btnWidth = 180;
+        int btnHeight = 40;
+        
+        
+        frame = new JFrame("LivroAutor");
         frame.setResizable(false);
-        frame.setBounds(300, 125, 725, 500);
+        frame.setBounds(800, 250, 250, 610);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
         //=============# BUTTONS #=============
         JButton btnIncluirAutor = new JButton("Incluir Autor");
-        btnIncluirAutor.setBounds(48, 249, 180, 78);
-        btnIncluirAutor.setForeground(new Color(255, 255, 255));
-        btnIncluirAutor.setBackground(new Color(220, 20, 60));
-
+        btnIncluirAutor.setBounds(leftMargin, topMargin, btnWidth, btnHeight);
+        
+        topMargin += btnHeight + 35;
+        
+        JButton btnIncluirLivro = new JButton("Incluir Livro");
+        btnIncluirLivro.setBounds(leftMargin, topMargin, btnWidth, btnHeight);
+        
+        topMargin += btnHeight + 35;
+        
+        JButton btnListarAutores = new JButton("Listar Autores");
+        btnListarAutores.setBounds(leftMargin, topMargin, btnWidth, btnHeight);
+        
+        topMargin += btnHeight + 35;
+        
+        JButton btnListarLivrosComAutores = new JButton("Listar livros e seus autores");
+        btnListarLivrosComAutores.setBounds(leftMargin, topMargin, btnWidth, btnHeight);
+        
+        topMargin += btnHeight + 35;
+        
+        JButton btnListarAutoresDeUmLivro = new JButton("Listar Autores de um Livro");
+        btnListarAutoresDeUmLivro.setBounds(leftMargin, topMargin, btnWidth, btnHeight);
+        
+        topMargin += btnHeight + 35;
+        
+        JButton btnListarLivrosDeUmAutor = new JButton("Listar Livros de um Autor");
+        btnListarLivrosDeUmAutor.setBounds(leftMargin, topMargin, btnWidth, btnHeight);
+        
+        topMargin += btnHeight + 35;
+        
+        JButton btnSair = new JButton("Sair");
+        btnSair.setBounds(leftMargin, topMargin, btnWidth, btnHeight);
+        
+        frame.getContentPane().add(btnIncluirAutor);
+        frame.getContentPane().add(btnIncluirLivro);
+        frame.getContentPane().add(btnListarAutores);
+        frame.getContentPane().add(btnListarLivrosComAutores);
+        frame.getContentPane().add(btnListarAutoresDeUmLivro);
+        frame.getContentPane().add(btnListarLivrosDeUmAutor);
+        frame.getContentPane().add(btnSair);
+        
+        
+        
+        btnSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+        
+        btnIncluirAutor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                autorController = new AutorController();
+            }
+        });
+        
+        btnListarLivrosComAutores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                livroController = new LivroController();
+            }
+        });
 //        btnIncluirAutor.addActionListener(new ActionListener() {
 //
 //            @Override
@@ -68,12 +131,7 @@ public class MainView {
 //            }
 //
 //        });
-        frame.getContentPane().add(btnIncluirAutor);
-
-        JButton btnIncluirLivro = new JButton("Incluir Livro");
-        btnIncluirLivro.setBounds(268, 249, 160, 78);
-        btnIncluirLivro.setForeground(new Color(255, 255, 255));
-        btnIncluirLivro.setBackground(new Color(220, 20, 60));
+        
 //        btnIncluirLivro.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -82,8 +140,6 @@ public class MainView {
 //                frame.setVisible(false);
 //            }
 //        });
-        frame.getContentPane().add(btnIncluirLivro);
-
        
 //        //=============# LABELS #=============
 //        JLabel lblEscolhaUmaDas = new JLabel("Escolha uma das opções :");
@@ -100,11 +156,5 @@ public class MainView {
 //        });
 //
 //        frame.getContentPane().add(lblEscolhaUmaDas);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBackground(new Color(220, 20, 60));
-        panel.setBounds(0, 0, 719, 112);
-        frame.getContentPane().add(panel);
     }
 }
