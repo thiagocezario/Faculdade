@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1541539686 source:c:\users\thiago\documents\faculdade\faculdade\estrutura de dados ii\grafos\graph.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"graph.h"
+
+1541543782 c:\users\thiago\documents\faculdade\faculdade\estrutura de dados ii\grafos\graph.h
+
+1541546054 source:c:\users\thiago\documents\faculdade\faculdade\estrutura de dados ii\grafos\test.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"graph.h"
+

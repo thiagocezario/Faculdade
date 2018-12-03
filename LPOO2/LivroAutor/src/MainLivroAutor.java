@@ -24,7 +24,7 @@ public class MainLivroAutor {
         MainLivroAutor main = new MainLivroAutor();
         String opcao;
         
-        MainController mainController = new MainController();
+//        MainController mainController = new MainController();
 
         while (true) {
             try {
